@@ -15,10 +15,13 @@ try:
 except ImportError:
     TEXTSTAT_OK = False
 
-st.set_page_config(page_title="Audit SEO - Hinsight", page_icon="🔍", layout="wide",
+st.set_page_config(page_title="Scopo - SEO Audit", page_icon="🔍", layout="wide",
     menu_items={"Get help":None,"Report a bug":None,"About":None})
 
 st.markdown("""<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+/* ── RESET STREAMLIT CHROME ── */
 #MainMenu{display:none !important}
 footer{display:none !important}
 header{display:none !important}
@@ -27,43 +30,54 @@ header{display:none !important}
 [data-testid="stDecoration"]{display:none !important}
 .stDeployButton{display:none !important}
 button[kind="header"]{display:none !important}
-.stApp{background:#f4f6fb}
+
+/* ── BASE ── */
+.stApp{background:#F8F9FA;font-family:'Inter',sans-serif}
 .block-container{padding-top:1rem;padding-bottom:2rem}
-.app-header{background:linear-gradient(135deg,#091045 0%,#212c6c 100%);padding:1.4rem 2rem;border-radius:14px;margin-bottom:1.8rem;border-bottom:3px solid #fc6f06}
-.app-header h1{color:white;margin:0;font-size:1.5rem;font-weight:700}
-.app-header p{color:#c8d0e8;margin:5px 0 0;font-size:.82rem}
+
+/* ── HEADER SCOPO ── */
+.app-header{background:#FFFFFF;padding:1rem 2rem;border-radius:0;margin-bottom:1.8rem;border-bottom:1px solid #E5E7EB}
+.app-header h1{color:#111827 !important;margin:0;font-size:1.5rem;font-weight:800;letter-spacing:-.02em}
+.app-header p{color:#6B7280;margin:3px 0 0;font-size:.85rem}
+
+/* ── KPI CARDS ── */
 .kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:1.2rem}
-.kpi-card{background:white;border-radius:12px;padding:1rem 1.1rem;box-shadow:0 1px 6px rgba(9,16,69,.07);border-top:3px solid #e5e7eb}
-.kpi-card.orange{border-color:#fc6f06}.kpi-card.red{border-color:#ef4444}
-.kpi-card.green{border-color:#059669}.kpi-card.blue{border-color:#0c85be}
-.kpi-card.teal{border-color:#00cec8}.kpi-card.purple{border-color:#7c3aed}
-.kpi-val{font-size:2rem;font-weight:700;color:#091045;line-height:1.1}
-.kpi-lbl{font-size:.78rem;color:#6b7280;margin-top:3px;font-weight:500}
-.score-wrap{background:white;border-radius:14px;padding:1.5rem;text-align:center;box-shadow:0 1px 6px rgba(9,16,69,.07)}
-.score-big{font-size:4.5rem;font-weight:800;line-height:1}
-.score-sub{font-size:.8rem;color:#9ca3af;margin-top:2px}
-.score-lbl{font-size:1.05rem;font-weight:700;margin-top:6px}
-.score-bar{height:8px;border-radius:8px;background:#e5e7eb;margin-top:12px;overflow:hidden}
+.kpi-card{background:#FFFFFF;border-radius:12px;padding:1rem 1.1rem;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #E5E7EB}
+.kpi-val{font-size:2rem;font-weight:800;color:#111827;line-height:1.1}
+.kpi-lbl{font-size:.75rem;color:#6B7280;margin-top:3px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.kpi-card.orange .kpi-val::before{content:"● ";color:#2563EB;font-size:1rem}
+.kpi-card.red .kpi-val::before{content:"● ";color:#EF4444;font-size:1rem}
+.kpi-card.green .kpi-val::before{content:"● ";color:#10B981;font-size:1rem}
+.kpi-card.blue .kpi-val::before{content:"● ";color:#2563EB;font-size:1rem}
+.kpi-card.teal .kpi-val::before{content:"● ";color:#2563EB;font-size:1rem}
+.kpi-card.purple .kpi-val::before{content:"● ";color:#7C3AED;font-size:1rem}
+
+/* ── SCORE GLOBAL ── */
+.score-wrap{background:#FFFFFF;border-radius:12px;padding:1.5rem;text-align:center;border:1px solid #E5E7EB}
+.score-big{font-size:5rem;font-weight:900;line-height:1}
+.score-sub{font-size:.9rem;color:#6B7280;margin-top:2px}
+.score-lbl{font-size:1rem;font-weight:700;margin-top:6px}
+.score-bar{height:6px;border-radius:8px;background:#F3F4F6;margin-top:12px;overflow:hidden}
 .score-bar-fill{height:100%;border-radius:8px}
-.sug{border-radius:10px;padding:.9rem 1.1rem;margin-bottom:.7rem;border-left:4px solid;background:white}
-.sug-title{font-weight:700;color:#111827;font-size:.9rem}
-.sug-action{color:#4b5563;font-size:.83rem;margin-top:4px}
-.sug-chip{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 9px;border-radius:20px;margin-top:6px}
-.stProgress>div>div{background:#fc6f06 !important}
+
+/* ── SUGGESTIONS ── */
+.sug{border-radius:8px;padding:.9rem 1.1rem;margin-bottom:.7rem;border-left:3px solid}
+.sug-title{font-weight:600;color:#111827;font-size:.9rem}
+.sug-action{color:#6B7280;font-size:.83rem;margin-top:4px}
+.sug-chip{display:inline-block;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;margin-top:6px}
+.stProgress>div>div{background:#2563EB !important}
 
 /* ── SIDEBAR ── */
-section[data-testid="stSidebar"]{background:#f9fafc; min-width:280px !important; width:300px !important}
+section[data-testid="stSidebar"]{background:#FFFFFF; min-width:280px !important; width:300px !important}
 section[data-testid="stSidebar"] > div{padding:1rem 1rem 2rem 1rem !important}
 
-/* Titres de section sidebar */
 section[data-testid="stSidebar"] h3{
-    font-size:.85rem !important; font-weight:700 !important;
-    color:#091045 !important; letter-spacing:.03em;
+    font-size:.75rem !important; font-weight:600 !important;
+    color:#111827 !important; letter-spacing:.08em; text-transform:uppercase;
     margin-top:.5rem !important; margin-bottom:.3rem !important;
     white-space:nowrap !important; overflow:visible !important;
 }
 
-/* Labels des inputs, sliders, checkboxes */
 section[data-testid="stSidebar"] label,
 section[data-testid="stSidebar"] .stSlider label,
 section[data-testid="stSidebar"] .stCheckbox label,
@@ -72,96 +86,49 @@ section[data-testid="stSidebar"] [data-testid="stWidgetLabel"],
 section[data-testid="stSidebar"] [data-testid="stWidgetLabel"] p{
     font-size:.82rem !important; color:#374151 !important;
     font-weight:500 !important; white-space:nowrap !important;
-    overflow:visible !important; text-overflow:clip !important;
-    min-width:0 !important;
+    overflow:visible !important; text-overflow:clip !important; min-width:0 !important;
 }
 
-/* Checkbox - forcer fond blanc et texte visible */
-section[data-testid="stSidebar"] .stCheckbox{
-    background:transparent !important;
-}
-section[data-testid="stSidebar"] .stCheckbox span{
-    color:#374151 !important; font-size:.82rem !important;
-}
-section[data-testid="stSidebar"] .stCheckbox input[type="checkbox"]{
-    accent-color:#fc6f06;
-}
+section[data-testid="stSidebar"] .stCheckbox{background:transparent !important}
+section[data-testid="stSidebar"] .stCheckbox span{color:#374151 !important; font-size:.82rem !important}
+section[data-testid="stSidebar"] .stCheckbox input[type="checkbox"]{accent-color:#2563EB}
+section[data-testid="stSidebar"] .stToggle span{color:#374151 !important; font-size:.82rem !important}
 
-/* Toggle */
-section[data-testid="stSidebar"] .stToggle span{
-    color:#374151 !important; font-size:.82rem !important;
-}
-
-/* Inputs texte */
 section[data-testid="stSidebar"] input[type="text"],
 section[data-testid="stSidebar"] input[type="password"]{
     font-size:.82rem !important; background:#fff !important;
-    color:#111827 !important; border:1px solid #d1d5db !important;
-    border-radius:6px !important;
+    color:#111827 !important; border:1px solid #E5E7EB !important; border-radius:8px !important;
 }
 
-/* Sliders */
-section[data-testid="stSidebar"] .stSlider [data-testid="stTickBar"]{
-    display:none;
-}
-section[data-testid="stSidebar"] .stSlider .stMarkdown{
-    font-size:.75rem !important; color:#6b7280 !important;
-}
+section[data-testid="stSidebar"] .stSlider [data-testid="stTickBar"]{display:none}
+section[data-testid="stSidebar"] .stSlider .stMarkdown{font-size:.75rem !important; color:#6B7280 !important}
 
-/* Bouton lancer l'audit */
 section[data-testid="stSidebar"] .stButton button{
-    background:#fc6f06 !important; color:white !important;
+    background:#2563EB !important; color:white !important;
     font-weight:700 !important; border:none !important;
     border-radius:8px !important; font-size:.9rem !important;
 }
-section[data-testid="stSidebar"] .stButton button:hover{
-    background:#e05c00 !important;
-}
+section[data-testid="stSidebar"] .stButton button:hover{background:#1D4ED8 !important}
+
+section[data-testid="stSidebar"] hr{margin:.4rem 0 !important; border-color:#F3F4F6 !important}
 
 /* ── ONGLETS ── */
 .stTabs [data-baseweb="tab-list"]{
-    gap:4px !important;
-    background:#f0f2f8 !important;
-    border-radius:10px !important;
-    padding:4px !important;
-    flex-wrap:nowrap !important;
-    overflow-x:auto !important;
+    gap:4px !important; background:#F3F4F6 !important; border-radius:8px !important;
+    padding:4px !important; flex-wrap:nowrap !important; overflow-x:auto !important;
 }
 .stTabs [data-baseweb="tab"]{
-    background:transparent !important;
-    border-radius:7px !important;
-    padding:6px 14px !important;
-    font-size:.8rem !important;
-    font-weight:600 !important;
-    color:#4b5563 !important;
-    white-space:nowrap !important;
-    border:none !important;
-    min-width:fit-content !important;
+    background:transparent !important; border-radius:7px !important;
+    padding:6px 14px !important; font-size:.8rem !important; font-weight:500 !important;
+    color:#6B7280 !important; white-space:nowrap !important; border:none !important; min-width:fit-content !important;
 }
-.stTabs [aria-selected="true"]{
-    background:white !important;
-    color:#091045 !important;
-    box-shadow:0 1px 4px rgba(9,16,69,.12) !important;
-}
-.stTabs [data-baseweb="tab"]:hover{
-    color:#fc6f06 !important;
-    background:rgba(252,111,6,.07) !important;
-}
-.stTabs [data-baseweb="tab-highlight"]{
-    background:#fc6f06 !important;
-    height:2px !important;
-    border-radius:2px !important;
-}
+.stTabs [aria-selected="true"]{background:white !important; color:#111827 !important; box-shadow:0 1px 4px rgba(0,0,0,.08) !important}
+.stTabs [data-baseweb="tab"]:hover{color:#111827 !important; background:rgba(255,255,255,.6) !important}
+.stTabs [data-baseweb="tab-highlight"]{background:#2563EB !important; height:2px !important; border-radius:2px !important}
 
-/* Séparateurs sidebar */
-section[data-testid="stSidebar"] hr{
-    margin:.4rem 0 !important;
-    border-color:#e5e7eb !important;
-}
-
-/* ── FORCER LISIBILITÉ COMPOSANTS NATIFS STREAMLIT ── */
+/* ── LISIBILITÉ ── */
 [data-testid="stMetricValue"]{color:#111827 !important;font-weight:700 !important}
-[data-testid="stMetricLabel"]{color:#6b7280 !important}
+[data-testid="stMetricLabel"]{color:#6B7280 !important}
 [data-testid="stMetricDelta"]{color:#374151 !important}
 div[data-testid="stAlert"] p{color:#111827 !important}
 div[data-testid="stAlert"][kind="warning"] p{color:#92400e !important}
@@ -171,39 +138,26 @@ div[data-testid="stAlert"][kind="error"] p{color:#991b1b !important}
 .stAlert p{color:#111827 !important}
 [data-baseweb="notification"] span{color:#111827 !important}
 
-/* ── FORCER LISIBILITÉ TEXTES DANS LES ONGLETS ── */
 .stTabs .stMarkdown p{color:#111827 !important}
 [data-testid="stVerticalBlock"] .stMarkdown p{color:#111827 !important}
 .stTabs .stMarkdown h1,.stTabs .stMarkdown h2,.stTabs .stMarkdown h3,
-.stTabs .stMarkdown h4,.stTabs .stMarkdown h5,.stTabs .stMarkdown h6{color:#091045 !important}
+.stTabs .stMarkdown h4,.stTabs .stMarkdown h5,.stTabs .stMarkdown h6{color:#111827 !important}
 
-/* ── BLOCS INFO / BLOCKQUOTE ── */
-[data-testid="stCaptionContainer"] p{color:#6b7280 !important}
-div[data-testid="stMarkdownContainer"] blockquote{border-left:3px solid #0c85be !important;background:#dbeafe !important;padding:.5rem 1rem !important;border-radius:4px !important}
-div[data-testid="stMarkdownContainer"] blockquote p{color:#1e3a5f !important;font-weight:500 !important}
-div[data-testid="stMarkdownContainer"] blockquote *{color:#1e3a5f !important}
+[data-testid="stCaptionContainer"] p{color:#6B7280 !important}
+div[data-testid="stMarkdownContainer"] blockquote{border-left:3px solid #2563EB !important;background:#EFF6FF !important;padding:.5rem 1rem !important;border-radius:4px !important}
+div[data-testid="stMarkdownContainer"] blockquote p{color:#1E40AF !important;font-weight:500 !important}
+div[data-testid="stMarkdownContainer"] blockquote *{color:#1E40AF !important}
 
 /* ── BOUTONS DOWNLOAD ── */
 .stDownloadButton button{
-    background:linear-gradient(135deg,#091045,#212c6c) !important;
-    color:white !important;
-    font-weight:700 !important;
-    border:none !important;
-    border-radius:8px !important;
-    font-size:.92rem !important;
-    padding:.7rem 1rem !important;
-    border-bottom:3px solid #fc6f06 !important;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5) !important;
-    letter-spacing:.02em !important;
+    background:#FFFFFF !important; color:#111827 !important;
+    font-weight:600 !important; border:1px solid #E5E7EB !important;
+    border-radius:8px !important; font-size:.92rem !important; padding:.7rem 1rem !important;
 }
-.stDownloadButton button:hover{
-    background:linear-gradient(135deg,#212c6c,#091045) !important;
-    border-bottom-color:#f8ba07 !important;
-    color:white !important;
-}
+.stDownloadButton button:hover{border-color:#2563EB !important; color:#2563EB !important}
 </style>""", unsafe_allow_html=True)
 
-HEADERS = {"User-Agent":"Mozilla/5.0 (compatible; HinsightAuditBot/3.0; +https://hinsight.fr)","Accept-Language":"fr-FR,fr;q=0.9"}
+HEADERS = {"User-Agent":"Mozilla/5.0 (compatible; ScopoBot/1.0; +https://scopo.app)","Accept-Language":"fr-FR,fr;q=0.9"}
 
 FILE_TYPES = {
     "pdf":   [".pdf"],
@@ -911,16 +865,16 @@ def generate_pdf(df, domain, score, ps_data, dups, sugs, opr_data=None, security
                 result += "?"
         return result
 
-    # ── Palette Hinsight
-    NAVY   = (9,16,69)
-    BLUE   = (33,44,108)
-    ORANGE = (252,111,6)
-    YELLOW = (248,186,7)
-    TEAL   = (0,206,200)
+    # ── Palette Scopo
+    NAVY   = (17,24,39)
+    BLUE   = (37,99,235)
+    ORANGE = (37,99,235)
+    YELLOW = (245,158,11)
+    TEAL   = (96,165,250)
     WHITE  = (255,255,255)
     GRAY   = (107,114,128)
-    LIGHT  = (240,242,248)
-    GREEN  = (5,150,105)
+    LIGHT  = (248,249,250)
+    GREEN  = (16,185,129)
     RED    = (239,68,68)
     domain_clean = domain.replace("https://","").replace("http://","").rstrip("/")
     date_str = datetime.datetime.now().strftime("%d/%m/%Y")
@@ -936,7 +890,7 @@ def generate_pdf(df, domain, score, ps_data, dups, sugs, opr_data=None, security
             self.set_fill_color(*ORANGE); self.rect(0,14,210,1.5,'F')
             # Logo texte gauche
             self.set_xy(8,3); self.set_font("Helvetica","B",9)
-            self.set_text_color(*WHITE); self.cell(40,8,"HINSIGHT",new_x="RIGHT", new_y="TOP")
+            self.set_text_color(*WHITE); self.cell(40,8,"SCOPO",new_x="RIGHT", new_y="TOP")
             self.set_font("Helvetica","",7); self.set_text_color(170,180,220)
             self.cell(0,8,f"Audit SEO  -  {domain_clean}  -  {date_str}",new_x="RIGHT", new_y="TOP",align="R")
             self.set_xy(0,17)
@@ -949,7 +903,7 @@ def generate_pdf(df, domain, score, ps_data, dups, sugs, opr_data=None, security
             self.set_y(286)
             self.set_font("Helvetica","",7); self.set_text_color(170,180,220)
             self.cell(0,5,
-                f"Hinsight - Conseil & Formation Marketing Digital  -  lois.armand@hinsight.fr  -  hinsight.fr  -  Page {self.page_no()}",
+                f"Scopo - SEO Audit, simplified.  -  hello@scopo.app  -  scopo.app  -  Page {self.page_no()}",
                 align="C")
 
         def section(self, title, col=BLUE, icon=""):
@@ -1001,8 +955,8 @@ def generate_pdf(df, domain, score, ps_data, dups, sugs, opr_data=None, security
 
     # ── Texte couverture
     pdf.set_xy(16,22)
-    pdf.set_font("Helvetica","B",9); pdf.set_text_color(*ORANGE)
-    pdf.cell(0,6,"HINSIGHT - CONSEIL & FORMATION MARKETING DIGITAL",new_x="LMARGIN", new_y="NEXT")
+    pdf.set_font("Helvetica","B",9); pdf.set_text_color(*TEAL)
+    pdf.cell(0,6,"SCOPO - SEO AUDIT, SIMPLIFIED.",new_x="LMARGIN", new_y="NEXT")
 
     pdf.set_x(16)
     pdf.set_font("Helvetica","B",28); pdf.set_text_color(*WHITE)
@@ -1068,7 +1022,7 @@ def generate_pdf(df, domain, score, ps_data, dups, sugs, opr_data=None, security
         ("02", "Préconisations prioritaires",     "Actions classées par niveau de criticité et impact estimé"),
         ("03", "Sécurité du site",                "HTTPS, headers HTTP, cookies, formulaires et contenu mixte"),
         ("04", "Top pages à corriger",            "Les 20 URLs avec le score SEO le plus faible"),
-        ("05", "À propos de Hinsight",            "Votre partenaire en conseil & formation marketing digital"),
+        ("05", "À propos de Scopo",                "SEO Audit, simplified. — scopo.app"),
     ]
     for num, titre, desc in sommaire:
         y = pdf.get_y()
@@ -1083,26 +1037,26 @@ def generate_pdf(df, domain, score, ps_data, dups, sugs, opr_data=None, security
         pdf.cell(0,4,desc,new_x="LMARGIN", new_y="NEXT")
         pdf.ln(3)
 
-    # ── Bloc pub Hinsight bas de couverture
+    # ── Bloc Scopo bas de couverture
     pdf.set_xy(0,240)
     pdf.set_fill_color(*NAVY); pdf.rect(0,240,210,57,'F')
-    pdf.set_fill_color(*ORANGE); pdf.rect(0,240,210,1.5,'F')
+    pdf.set_fill_color(*BLUE); pdf.rect(0,240,210,1.5,'F')
     pdf.set_fill_color(*TEAL); pdf.rect(0,295,210,2,'F')
 
     pdf.set_xy(16,248)
     pdf.set_font("Helvetica","B",11); pdf.set_text_color(*WHITE)
-    pdf.cell(0,6,"Cet audit a été réalisé avec Hinsight Audit SEO",new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0,6,"Cet audit a été réalisé avec Scopo",new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(16); pdf.set_font("Helvetica","",8); pdf.set_text_color(170,186,230)
     pdf.multi_cell(130,5,
-        "Hinsight accompagne les entreprises et les équipes marketing dans leur montée "
-        "en compétences digitales : stratégie SEO, audit, formation, conseil en "
-        "marketing digital. Outil développé par Loïs ARMAND - Expert Marketing Digital.")
+        "Scopo est un outil d'audit SEO gratuit et open source. "
+        "Crawl on-page, vitesse, sécurité, liens sortants, Open Graph, "
+        "Schema.org et bien plus. SEO Audit, simplified.")
 
     # Contact à droite
     pdf.set_xy(155,248)
-    pdf.set_font("Helvetica","B",8); pdf.set_text_color(*ORANGE)
-    pdf.cell(50,5,"NOUS CONTACTER",align="C",new_x="LMARGIN", new_y="NEXT")
-    for line in ["lois.armand@hinsight.fr","hinsight.fr","06 51 09 77 89"]:
+    pdf.set_font("Helvetica","B",8); pdf.set_text_color(*TEAL)
+    pdf.cell(50,5,"CONTACT",align="C",new_x="LMARGIN", new_y="NEXT")
+    for line in ["hello@scopo.app","scopo.app"]:
         pdf.set_x(155); pdf.set_font("Helvetica","",8); pdf.set_text_color(*WHITE)
         pdf.cell(50,5,line,align="C",new_x="LMARGIN", new_y="NEXT")
 
@@ -1320,33 +1274,33 @@ def generate_pdf(df, domain, score, ps_data, dups, sugs, opr_data=None, security
 
     section_num_final = "05" if security_data else "04"
     pdf.set_xy(16,30)
-    pdf.set_font("Helvetica","B",8); pdf.set_text_color(*ORANGE)
+    pdf.set_font("Helvetica","B",8); pdf.set_text_color(*TEAL)
     pdf.cell(0,5,safe(f"{section_num_final} - A PROPOS"),new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(16); pdf.set_font("Helvetica","B",26); pdf.set_text_color(*WHITE)
-    pdf.cell(0,12,"Hinsight",new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0,12,"Scopo",new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(16); pdf.set_font("Helvetica","",13); pdf.set_text_color(170,186,230)
-    pdf.cell(0,7,"Conseil & Formation Marketing Digital",new_x="LMARGIN", new_y="NEXT")
-    pdf.set_x(16); pdf.set_fill_color(*ORANGE); pdf.rect(16,60,80,1,'F')
+    pdf.cell(0,7,"SEO Audit, simplified.",new_x="LMARGIN", new_y="NEXT")
+    pdf.set_x(16); pdf.set_fill_color(*BLUE); pdf.rect(16,60,80,1,'F')
 
     pdf.set_xy(16,70)
     pdf.set_font("Helvetica","",9); pdf.set_text_color(200,210,240)
     pdf.multi_cell(178,5.5,
-        "Hinsight aide les entreprises, les équipes marketing et les professionnels "
-        "à structurer et optimiser leur présence digitale. Nous intervenons sur "
-        "l'ensemble de la chaîne de valeur marketing digital : diagnostic, stratégie, "
-        "formation, accompagnement et mise en oeuvre.")
+        "Scopo est un outil d'audit SEO gratuit qui aide les équipes "
+        "marketing et les professionnels du web à analyser et optimiser "
+        "leur référencement naturel : crawl, on-page, vitesse, sécurité, "
+        "accessibilité et bien plus.")
 
-    # ── Services en 3 blocs
+    # ── Fonctionnalités en 3 blocs
     services = [
-        ("Audit & Conseil", ORANGE,
-         "Audit SEO, technique et UX - Stratégie digitale - Accompagnement "
-         "à la mise en oeuvre - Benchmark concurrentiel"),
-        ("Formation", TEAL,
-         "Formations marketing digital - SEO - Social Media - Content Strategy "
-         "- Analytics - Intra et inter-entreprises"),
-        ("Développement", YELLOW,
-         "Sites web - E-commerce - Outils sur mesure - Optimisation "
-         "des tunnels de conversion"),
+        ("Crawl & On-page", BLUE,
+         "Crawl complet - Title/H1/Meta - Canonical - Noindex - "
+         "Score SEO par page - Arborescence"),
+        ("Vitesse & Sécurité", TEAL,
+         "Core Web Vitals - PageSpeed - HTTPS - Headers HTTP - "
+         "Cookies - Contenu mixte"),
+        ("Analyse avancée", YELLOW,
+         "Mots-clés - Lisibilité Flesch - Open Graph - Schema.org - "
+         "Maillage interne - Doublons"),
     ]
     bw = 57; bx = 16
     for title, col, desc in services:
@@ -1358,37 +1312,36 @@ def generate_pdf(df, domain, score, ps_data, dups, sugs, opr_data=None, security
         pdf.multi_cell(bw-2, 4.5, desc)
         bx += bw + 4
 
-    # ── Formateur
+    # ── Tagline
     pdf.set_xy(16,180)
-    pdf.set_font("Helvetica","B",10); pdf.set_text_color(*ORANGE)
-    pdf.cell(0,5,"Votre formateur & consultant",new_x="LMARGIN", new_y="NEXT")
+    pdf.set_font("Helvetica","B",10); pdf.set_text_color(*TEAL)
+    pdf.cell(0,5,"Exports inclus",new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(16); pdf.set_font("Helvetica","B",16); pdf.set_text_color(*WHITE)
-    pdf.cell(0,8,"Loïs ARMAND",new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0,8,"Excel  ·  PDF  ·  JSON",new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(16); pdf.set_font("Helvetica","",9); pdf.set_text_color(170,186,230)
     pdf.multi_cell(130,5,
-        "Expert en marketing digital avec une triple expertise : conseil stratégique, "
-        "développement web et formation. Intervenant certifié auprès d'étudiants en "
-        "Master et de professionnels en reconversion.")
+        "Tous les rapports sont exportables en Excel multi-onglets, "
+        "en PDF professionnel et en JSON pour intégration dans vos outils. "
+        "Gratuit, open source, déployable sur Streamlit Cloud.")
 
     # ── CTA contact
     pdf.set_xy(16,240)
-    pdf.set_fill_color(*ORANGE); pdf.rect(16,240,80,30,'F')
+    pdf.set_fill_color(*BLUE); pdf.rect(16,240,80,30,'F')
     pdf.set_fill_color(*TEAL); pdf.rect(104,240,102,30,'F')
 
     pdf.set_xy(16,245); pdf.set_font("Helvetica","B",8); pdf.set_text_color(*WHITE)
-    pdf.cell(80,5,"CONTACTEZ-NOUS",align="C",new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(80,5,"CONTACT",align="C",new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(16); pdf.set_font("Helvetica","",8); pdf.set_text_color(*WHITE)
-    pdf.cell(80,5,"lois.armand@hinsight.fr",align="C",new_x="LMARGIN", new_y="NEXT")
-    pdf.set_x(16); pdf.cell(80,5,"hinsight.fr",align="C",new_x="LMARGIN", new_y="NEXT")
-    pdf.set_x(16); pdf.cell(80,5,"06 51 09 77 89",align="C")
+    pdf.cell(80,5,"hello@scopo.app",align="C",new_x="LMARGIN", new_y="NEXT")
+    pdf.set_x(16); pdf.cell(80,5,"scopo.app",align="C")
 
     pdf.set_xy(104,245); pdf.set_font("Helvetica","B",8); pdf.set_text_color(*NAVY)
-    pdf.cell(102,5,"CET OUTIL EST PROPOSÉ PAR HINSIGHT",align="C",new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(102,5,"RAPPORT GENERE PAR SCOPO",align="C",new_x="LMARGIN", new_y="NEXT")
     pdf.set_x(104); pdf.set_font("Helvetica","",7.5); pdf.set_text_color(*NAVY)
     pdf.multi_cell(100,4.5,
-        "Hinsight Audit SEO est un outil propriétaire développé "
-        "dans le cadre de l'offre de conseil & formation Hinsight. "
-        "Rapport confidentiel - Usage client exclusif.")
+        "Scopo - SEO Audit, simplified. "
+        "Outil gratuit et open source. "
+        "Rapport confidentiel - Usage exclusif du destinataire.")
 
     return bytes(pdf.output())
 
@@ -1407,15 +1360,15 @@ def to_excel(df, outbound_df=None, files_df=None, security_data=None):
             from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
             from openpyxl.utils import get_column_letter
 
-            # Couleurs charte Hinsight
-            NAVY_FILL   = PatternFill("solid", fgColor="091045")
-            ORANGE_FILL = PatternFill("solid", fgColor="FC6F06")
+            # Couleurs charte Scopo
+            NAVY_FILL   = PatternFill("solid", fgColor="111827")
+            ORANGE_FILL = PatternFill("solid", fgColor="2563EB")
             GREEN_FILL  = PatternFill("solid", fgColor="D1FAE5")
             RED_FILL    = PatternFill("solid", fgColor="FEE2E2")
             YELLOW_FILL = PatternFill("solid", fgColor="FEF9C3")
             GRAY_FILL   = PatternFill("solid", fgColor="F3F4F6")
             WHITE_FONT  = Font(color="FFFFFF", bold=True, size=11)
-            NAVY_FONT   = Font(color="091045", bold=True, size=10)
+            NAVY_FONT   = Font(color="111827", bold=True, size=10)
             DARK_FONT   = Font(color="111827", size=10)
             BOLD_FONT   = Font(bold=True, size=10)
             thin = Side(style="thin", color="E5E7EB")
@@ -1427,7 +1380,7 @@ def to_excel(df, outbound_df=None, files_df=None, security_data=None):
 
             # ── Titre principal
             ws.merge_cells("A1:F1")
-            ws["A1"] = "Rapport Sécurité - Hinsight Audit SEO"
+            ws["A1"] = "Rapport Sécurité - Scopo"
             ws["A1"].fill = NAVY_FILL
             ws["A1"].font = Font(color="FFFFFF", bold=True, size=14)
             ws["A1"].alignment = center
@@ -1649,8 +1602,8 @@ for k,v in [("crawl_done",False),("results",[]),("ps",{}),("ps_desktop",{}),("op
 # ── HEADER
 st.markdown("""<div class="app-header">
   <div>
-    <h1 style="color:white !important;margin:0;font-size:1.5rem;font-weight:700">🔍 Audit SEO - Hinsight</h1>
-    <div style="color:#c8d0e8;margin:5px 0 0;font-size:.82rem">Crawler SEO - On-page - Vitesse - Fichiers - Liens sortants - Open Graph - Schema.org - Backlinks</div>
+    <h1 style="color:#111827 !important;margin:0;font-size:1.5rem;font-weight:800;letter-spacing:-.02em;font-family:'Inter',sans-serif">Scopo<span style="color:#2563EB">·</span></h1>
+    <div style="color:#6B7280;margin:3px 0 0;font-size:.85rem">SEO Audit, simplified.</div>
   </div>
 </div>""",unsafe_allow_html=True)
 
@@ -1935,10 +1888,10 @@ if st.session_state["crawl_done"] and st.session_state["results"]:
     if not sugs:
         st.success("🎉 Aucun problème majeur - bon travail !")
     else:
-        bmap={"red":"#ef4444","yellow":"#f8ba07","blue":"#0c85be","green":"#059669"}
-        bgmap={"red":"#fff5f5","yellow":"#fffbeb","blue":"#eff6ff","green":"#f0fdf4"}
-        chipmap={"red":"#fee2e2;color:#991b1b","yellow":"#fef3c7;color:#92400e",
-                 "blue":"#dbeafe;color:#1e40af","green":"#dcfce7;color:#166534"}
+        bmap={"red":"#ef4444","yellow":"#f8ba07","blue":"#2563EB","green":"#10B981"}
+        bgmap={"red":"rgba(239,68,68,.08)","yellow":"rgba(245,158,11,.08)","blue":"rgba(37,99,235,.08)","green":"rgba(16,185,129,.08)"}
+        chipmap={"red":"rgba(239,68,68,.12);color:#EF4444","yellow":"rgba(245,158,11,.12);color:#F59E0B",
+                 "blue":"rgba(37,99,235,.12);color:#2563EB","green":"rgba(16,185,129,.12);color:#10B981"}
         cols_sug = st.columns(min(len(sugs), 2))
         for idx, s in enumerate(sugs):
             b=bmap.get(s["c"],"#6b7280")
@@ -1979,7 +1932,7 @@ if st.session_state["crawl_done"] and st.session_state["results"]:
                 f'{indent}'
                 f'<span style="color:#6b7280">{"└─ " if depth>0 else ""}</span>'
                 f'{icon} '
-                f'<a href="{url}" target="_blank" style="color:#091045;text-decoration:none">{label or "/"}</a>'
+                f'<a href="{url}" target="_blank" style="color:#111827;text-decoration:none">{label or "/"}</a>'
                 f' &nbsp;<span style="background:{st_color}22;color:{st_color};padding:1px 6px;border-radius:10px;font-size:.75rem">{st_code}</span>'
                 f' <span style="background:{sc_color}22;color:{sc_color};padding:1px 6px;border-radius:10px;font-size:.75rem">{sc}/100</span>'
                 f'</div>'
@@ -2452,21 +2405,21 @@ if st.session_state["crawl_done"] and st.session_state["results"]:
             rb_found_val = "✅ Trouvé" if found_rb else "❌ Absent"
             st.markdown(f"""
             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1rem">
-              <div style="background:white;border-radius:10px;padding:.9rem 1rem;box-shadow:0 1px 5px rgba(9,16,69,.07);border-top:3px solid {rb_color}">
-                <div style="font-size:1.4rem;font-weight:700;color:#111827">{rb_found_val}</div>
-                <div style="font-size:.78rem;color:#6b7280;margin-top:3px">Statut robots.txt</div>
+              <div style="background:white;border-radius:12px;padding:.9rem 1rem;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #E5E7EB;border-left:3px solid {rb_color}">
+                <div style="font-size:1.4rem;font-weight:800;color:#111827">{rb_found_val}</div>
+                <div style="font-size:.75rem;color:#6B7280;margin-top:3px;text-transform:uppercase;letter-spacing:.04em">Statut robots.txt</div>
               </div>
-              <div style="background:white;border-radius:10px;padding:.9rem 1rem;box-shadow:0 1px 5px rgba(9,16,69,.07);border-top:3px solid #fc6f06">
-                <div style="font-size:1.4rem;font-weight:700;color:#111827">{robots_data.get("disallow_count", 0)}</div>
-                <div style="font-size:.78rem;color:#6b7280;margin-top:3px">Règles Disallow</div>
+              <div style="background:white;border-radius:12px;padding:.9rem 1rem;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #E5E7EB;border-left:3px solid #2563EB">
+                <div style="font-size:1.4rem;font-weight:800;color:#111827">{robots_data.get("disallow_count", 0)}</div>
+                <div style="font-size:.75rem;color:#6B7280;margin-top:3px;text-transform:uppercase;letter-spacing:.04em">Règles Disallow</div>
               </div>
-              <div style="background:white;border-radius:10px;padding:.9rem 1rem;box-shadow:0 1px 5px rgba(9,16,69,.07);border-top:3px solid #00cec8">
-                <div style="font-size:1.4rem;font-weight:700;color:#111827">{len(robots_data.get("user_agents", []))}</div>
-                <div style="font-size:.78rem;color:#6b7280;margin-top:3px">User-agents</div>
+              <div style="background:white;border-radius:12px;padding:.9rem 1rem;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #E5E7EB;border-left:3px solid #6B7280">
+                <div style="font-size:1.4rem;font-weight:800;color:#111827">{len(robots_data.get("user_agents", []))}</div>
+                <div style="font-size:.75rem;color:#6B7280;margin-top:3px;text-transform:uppercase;letter-spacing:.04em">User-agents</div>
               </div>
-              <div style="background:white;border-radius:10px;padding:.9rem 1rem;box-shadow:0 1px 5px rgba(9,16,69,.07);border-top:3px solid #0c85be">
-                <div style="font-size:1.4rem;font-weight:700;color:#111827">{len(robots_data.get("sitemap_refs", []))}</div>
-                <div style="font-size:.78rem;color:#6b7280;margin-top:3px">Refs sitemap</div>
+              <div style="background:white;border-radius:12px;padding:.9rem 1rem;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #E5E7EB;border-left:3px solid #2563EB">
+                <div style="font-size:1.4rem;font-weight:800;color:#111827">{len(robots_data.get("sitemap_refs", []))}</div>
+                <div style="font-size:.75rem;color:#6B7280;margin-top:3px;text-transform:uppercase;letter-spacing:.04em">Refs sitemap</div>
               </div>
             </div>
             """, unsafe_allow_html=True)
@@ -2495,17 +2448,17 @@ if st.session_state["crawl_done"] and st.session_state["results"]:
             sm_type = "Index" if sitemap_data.get("is_index") else "Standard"
             st.markdown(f"""
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1rem">
-              <div style="background:white;border-radius:10px;padding:.9rem 1rem;box-shadow:0 1px 5px rgba(9,16,69,.07);border-top:3px solid {sm_color}">
-                <div style="font-size:1.4rem;font-weight:700;color:#111827">{sm_found_val}</div>
-                <div style="font-size:.78rem;color:#6b7280;margin-top:3px">Statut sitemap</div>
+              <div style="background:white;border-radius:12px;padding:.9rem 1rem;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #E5E7EB;border-left:3px solid {sm_color}">
+                <div style="font-size:1.4rem;font-weight:800;color:#111827">{sm_found_val}</div>
+                <div style="font-size:.75rem;color:#6B7280;margin-top:3px;text-transform:uppercase;letter-spacing:.04em">Statut sitemap</div>
               </div>
-              <div style="background:white;border-radius:10px;padding:.9rem 1rem;box-shadow:0 1px 5px rgba(9,16,69,.07);border-top:3px solid #0c85be">
-                <div style="font-size:1.4rem;font-weight:700;color:#111827">{sitemap_data.get("url_count", 0)}</div>
-                <div style="font-size:.78rem;color:#6b7280;margin-top:3px">URLs indexées</div>
+              <div style="background:white;border-radius:12px;padding:.9rem 1rem;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #E5E7EB;border-left:3px solid #2563EB">
+                <div style="font-size:1.4rem;font-weight:800;color:#111827">{sitemap_data.get("url_count", 0)}</div>
+                <div style="font-size:.75rem;color:#6B7280;margin-top:3px;text-transform:uppercase;letter-spacing:.04em">URLs indexées</div>
               </div>
-              <div style="background:white;border-radius:10px;padding:.9rem 1rem;box-shadow:0 1px 5px rgba(9,16,69,.07);border-top:3px solid #00cec8">
-                <div style="font-size:1.4rem;font-weight:700;color:#111827">{sm_type}</div>
-                <div style="font-size:.78rem;color:#6b7280;margin-top:3px">Type</div>
+              <div style="background:white;border-radius:12px;padding:.9rem 1rem;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #E5E7EB;border-left:3px solid #6B7280">
+                <div style="font-size:1.4rem;font-weight:800;color:#111827">{sm_type}</div>
+                <div style="font-size:.75rem;color:#6B7280;margin-top:3px;text-transform:uppercase;letter-spacing:.04em">Type</div>
               </div>
             </div>
             """, unsafe_allow_html=True)
@@ -2590,7 +2543,7 @@ if st.session_state["crawl_done"] and st.session_state["results"]:
             st.markdown("#### ♿ Accessibilité - Lighthouse + analyse locale")
             if not ps_result:
                 st.warning("⚠️ Clé API PageSpeed requise pour le score Lighthouse accessibilité.")
-                st.markdown("""<div style='background:#dbeafe;border-radius:8px;padding:1rem;border-left:4px solid #0c85be;color:#1e3a5f;font-weight:500'>
+                st.markdown("""<div style='background:rgba(37,99,235,.08);border-radius:8px;padding:1rem;border-left:3px solid #2563EB;color:#1E40AF;font-weight:500'>
                 Ajoutez votre clé API PageSpeed dans la sidebar (gratuit, 25 000 req/jour)
                 </div>""", unsafe_allow_html=True)
             else:
@@ -2599,11 +2552,11 @@ if st.session_state["crawl_done"] and st.session_state["results"]:
                     acc_col = "#059669" if acc_score>=90 else ("#f8ba07" if acc_score>=50 else "#ef4444")
                     acc_lbl = "Excellent" if acc_score>=90 else ("À améliorer" if acc_score>=50 else "Problématique")
                     st.markdown(f"""<div style='background:white;border-radius:12px;padding:1.2rem 1.5rem;
-                        box-shadow:0 1px 5px rgba(9,16,69,.07);border-top:3px solid {acc_col};
+                        box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #E5E7EB;border-left:3px solid {acc_col};
                         display:inline-block;min-width:220px;margin-bottom:1rem'>
-                        <div style='font-size:2.8rem;font-weight:800;color:{acc_col}'>{acc_score}<span style='font-size:1rem;color:#9ca3af'>/100</span></div>
-                        <div style='font-weight:600;color:#374151'>{acc_lbl}</div>
-                        <div style='font-size:.78rem;color:#9ca3af'>Score Lighthouse Accessibilité</div>
+                        <div style='font-size:2.8rem;font-weight:800;color:{acc_col}'>{acc_score}<span style='font-size:1rem;color:#6B7280'>/100</span></div>
+                        <div style='font-weight:600;color:#111827'>{acc_lbl}</div>
+                        <div style='font-size:.75rem;color:#6B7280;text-transform:uppercase;letter-spacing:.04em'>Score Lighthouse Accessibilité</div>
                     </div>""", unsafe_allow_html=True)
 
                     acc_issues = ps_result.get("accessibility_issues",[])
@@ -2670,7 +2623,7 @@ if st.session_state["crawl_done"] and st.session_state["results"]:
                             sc=data["score"]
                             sc_col="#059669" if sc>=90 else ("#f8ba07" if sc>=50 else "#ef4444")
                             st.markdown(f"""<div style='background:white;border-radius:10px;padding:1.2rem;
-                                box-shadow:0 1px 5px rgba(9,16,69,.07);border-top:3px solid {sc_col}'>
+                                box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #E5E7EB;border-left:3px solid {sc_col}'>
                                 <div style='font-size:2.5rem;font-weight:800;color:{sc_col}'>{sc}<span style='font-size:1rem'>/100</span></div>
                                 <div style='margin-top:.8rem;font-size:.82rem;color:#6b7280'>
                                 LCP : <b>{data.get("lcp","N/A")}</b> &nbsp;|&nbsp;
@@ -2704,7 +2657,7 @@ if st.session_state["crawl_done"] and st.session_state["results"]:
                 sc1, sc2 = st.columns([1,3])
                 with sc1:
                     st.markdown(f"""<div style='background:white;border-radius:12px;padding:1.2rem;text-align:center;
-                        box-shadow:0 1px 5px rgba(9,16,69,.07);border-top:3px solid {sec_col}'>
+                        box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #E5E7EB;border-left:3px solid {sec_col}'>
                         <div style='font-size:3rem;font-weight:800;color:{sec_col}'>{sec_score}</div>
                         <div style='font-size:.8rem;color:#9ca3af'>/100</div>
                         <div style='font-weight:600;color:#374151;margin-top:4px'>{sec_lbl}</div>
@@ -2840,37 +2793,41 @@ if st.session_state["crawl_done"] and st.session_state["results"]:
             f"audit_{urlparse(domain).netloc}_{time.strftime('%Y%m%d')}.json","application/json",use_container_width=True)
 
 else:
-    st.markdown("""<div style='background:white;border-radius:12px;padding:2.5rem;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-top:1rem'>
-      <div style='font-size:3rem;margin-bottom:1rem'>🔍</div>
-      <h3 style='color:#091045;margin-bottom:.5rem'>Hinsight Audit SEO v3</h3>
-      <p style='color:#6b7280;max-width:540px;margin:0 auto'>Entrez l'URL dans la sidebar et lancez l'audit.<br>
-      Toutes les fonctionnalités gratuites sont activées.</p>
+    st.markdown("""<div style='background:white;border-radius:12px;padding:2.5rem;text-align:center;border:1px solid #E5E7EB;margin-top:1rem'>
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:1rem">
+        <circle cx="28" cy="28" r="18" stroke="#2563EB" stroke-width="3" fill="none"/>
+        <line x1="41" y1="41" x2="56" y2="56" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="28" cy="28" r="10" fill="rgba(37,99,235,.08)"/>
+      </svg>
+      <h3 style='color:#111827;margin-bottom:.5rem;font-family:Inter,sans-serif;font-weight:700'>Entrez une URL pour commencer</h3>
+      <p style='color:#6B7280;max-width:480px;margin:0 auto;font-size:.9rem;line-height:1.6'>Renseignez l'URL dans la sidebar et cliquez sur <strong>Lancer l'audit</strong>.<br>
+      Toutes les fonctionnalités sont gratuites et activées.</p>
     </div>""",unsafe_allow_html=True)
 
     st.markdown("<div style='margin-top:1.2rem'></div>", unsafe_allow_html=True)
     fc1, fc2, fc3, fc4 = st.columns(4)
-    card_style = "background:white;border-radius:10px;padding:1.3rem 1.1rem;box-shadow:0 1px 5px rgba(9,16,69,.07);height:160px;display:flex;flex-direction:column;justify-content:flex-start"
+    card_style = "background:white;border-radius:12px;padding:1.3rem 1.1rem;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #E5E7EB;height:160px;display:flex;flex-direction:column;justify-content:flex-start"
     with fc1:
-        st.markdown(f"""<div style='{card_style};border-top:3px solid #fc6f06'>
-        <div style='font-size:1.6rem;margin-bottom:.5rem'>📄</div>
-        <div style='font-weight:700;color:#091045;font-size:.9rem;margin-bottom:.4rem'>Fichiers</div>
-        <div style='color:#6b7280;font-size:.78rem;line-height:1.5'>Filtre PDF, images, docs, médias</div>
+        st.markdown(f"""<div style='{card_style}'>
+        <div style='font-size:1.4rem;margin-bottom:.5rem'>📄</div>
+        <div style='font-weight:700;color:#111827;font-size:.9rem;margin-bottom:.4rem'>Fichiers</div>
+        <div style='color:#6B7280;font-size:.78rem;line-height:1.5'>Filtre PDF, images, docs, médias</div>
         </div>""", unsafe_allow_html=True)
     with fc2:
-        st.markdown(f"""<div style='{card_style};border-top:3px solid #0c85be'>
-        <div style='font-size:1.6rem;margin-bottom:.5rem'>🔗</div>
-        <div style='font-weight:700;color:#091045;font-size:.9rem;margin-bottom:.4rem'>Liens sortants</div>
-        <div style='color:#6b7280;font-size:.78rem;line-height:1.5'>Top domaines off-page + ancres détaillées</div>
+        st.markdown(f"""<div style='{card_style}'>
+        <div style='font-size:1.4rem;margin-bottom:.5rem'>🔗</div>
+        <div style='font-weight:700;color:#111827;font-size:.9rem;margin-bottom:.4rem'>Liens sortants</div>
+        <div style='color:#6B7280;font-size:.78rem;line-height:1.5'>Top domaines off-page + ancres détaillées</div>
         </div>""", unsafe_allow_html=True)
     with fc3:
-        st.markdown(f"""<div style='{card_style};border-top:3px solid #059669'>
-        <div style='font-size:1.6rem;margin-bottom:.5rem'>📊</div>
-        <div style='font-weight:700;color:#091045;font-size:.9rem;margin-bottom:.4rem'>Open PageRank</div>
-        <div style='color:#6b7280;font-size:.78rem;line-height:1.5'>Score d'autorité gratuit (100 req/jour)</div>
+        st.markdown(f"""<div style='{card_style}'>
+        <div style='font-size:1.4rem;margin-bottom:.5rem'>📊</div>
+        <div style='font-weight:700;color:#111827;font-size:.9rem;margin-bottom:.4rem'>Open PageRank</div>
+        <div style='color:#6B7280;font-size:.78rem;line-height:1.5'>Score d'autorité gratuit (100 req/jour)</div>
         </div>""", unsafe_allow_html=True)
     with fc4:
-        st.markdown(f"""<div style='{card_style};border-top:3px solid #00cec8'>
-        <div style='font-size:1.6rem;margin-bottom:.5rem'>🌐</div>
-        <div style='font-weight:700;color:#091045;font-size:.9rem;margin-bottom:.4rem'>OG & Schema</div>
-        <div style='color:#6b7280;font-size:.78rem;line-height:1.5'>Open Graph + données structurées Schema.org</div>
+        st.markdown(f"""<div style='{card_style}'>
+        <div style='font-size:1.4rem;margin-bottom:.5rem'>🌐</div>
+        <div style='font-weight:700;color:#111827;font-size:.9rem;margin-bottom:.4rem'>OG & Schema</div>
+        <div style='color:#6B7280;font-size:.78rem;line-height:1.5'>Open Graph + données structurées Schema.org</div>
         </div>""", unsafe_allow_html=True)
